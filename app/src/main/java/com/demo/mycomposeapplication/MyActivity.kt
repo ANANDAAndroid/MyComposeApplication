@@ -1,0 +1,41 @@
+package com.demo.mycomposeapplication
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.demo.mycomposeapplication.screens.LogIn
+import com.demo.mycomposeapplication.screens.RecycleView
+import com.demo.mycomposeapplication.ui.theme.MyComposeApplicationTheme
+
+class MyActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MyComposeApplicationTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White
+                ) {
+
+                    /*LogIn { username, password ->
+                       Toast.makeText(
+                           this,
+                           "username is $username :: password is $password ",
+                           Toast.LENGTH_SHORT
+                       ).show()
+                   }*/
+
+
+                    RecycleView(list = arrayList)
+                }
+            }
+        }
+    }
+}
+
