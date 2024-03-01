@@ -42,6 +42,7 @@ fun RecycleViewPrev() {
 }
 
 
+
 @Composable
 fun RecycleView(list:ArrayList<Comments>) {
 LazyColumn{
