@@ -1,10 +1,15 @@
 package com.demo.mycomposeapplication.di
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.demo.mycomposeapplication.ApiService
+import com.demo.mycomposeapplication.AppDataBase
 import com.demo.mycomposeapplication.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,7 +28,7 @@ object AppModule {
             chain.proceed(chain.request().newBuilder().apply {
                 header(
                     "X-Master-Key",
-                    "$2a$10"+"$"+"b5HF6QN2ugFEG8c8wl8iLuiosEUe/L5LynmQeZQUlxCyP6RC0RXPG"
+                    "$2a$10" + "$" + "b5HF6QN2ugFEG8c8wl8iLuiosEUe/L5LynmQeZQUlxCyP6RC0RXPG"
                 )
                 header("X-Bin-Meta", "false")
                 header("Content-Type", "application/json")
@@ -31,7 +36,7 @@ object AppModule {
             }.build())
 
         }.also {
-            if (BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 it.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             }
         }.build()
@@ -39,17 +44,23 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun buildRetrofit(): Retrofit =
+    fun buildRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://api.jsonbin.io")
-            .client(okhttpClient())
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Provides
     @Singleton
-    fun apiService(): ApiService =
-        buildRetrofit().create(ApiService::class.java)
+    fun apiService(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
+    @Provides
+    @Singleton
+    fun roomDatabase(@ApplicationContext context: Context): RoomDatabase {
+        return Room.databaseBuilder(context, AppDataBase::class.java, "App_DATABASE")
+            .fallbackToDestructiveMigration().build()
+    }
 
 
 }

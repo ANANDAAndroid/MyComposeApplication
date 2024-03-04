@@ -2,4 +2,6 @@
     <string name="app_name">My Compose Application</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_mvvm_wiith_compose">MvvmWiithCompose</string>
+    <string name="title_activity_todo_with_room">TodoWithRoomActivity</string>
 </resources>
