@@ -1,4 +1,4 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.api
 
 sealed class Status<out T> {
 

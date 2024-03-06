@@ -3,8 +3,8 @@ package com.demo.mycomposeapplication.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.demo.mycomposeapplication.ApiService
-import com.demo.mycomposeapplication.AppDataBase
+import com.demo.mycomposeapplication.api.ApiService
+import com.demo.mycomposeapplication.database.AppDataBase
 import com.demo.mycomposeapplication.BuildConfig
 import dagger.Module
 import dagger.Provides

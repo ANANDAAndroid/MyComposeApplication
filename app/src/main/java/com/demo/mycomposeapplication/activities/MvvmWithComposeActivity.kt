@@ -1,4 +1,4 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.activities
 
 import android.os.Bundle
 import android.widget.Toast
@@ -10,6 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.demo.mycomposeapplication.api.Status
+import com.demo.mycomposeapplication.Viewmodel
 import com.demo.mycomposeapplication.screens.ProgressBar
 import com.demo.mycomposeapplication.screens.QuotesRecycleView
 import com.demo.mycomposeapplication.ui.theme.MyComposeApplicationTheme

@@ -1,4 +1,4 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.model
 
 class QuotesDataModel {
     data class Response(

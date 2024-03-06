@@ -1,4 +1,4 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.model
 
 data class Comments(val comment:String)
 val arrayList=ArrayList<Comments> ().apply {

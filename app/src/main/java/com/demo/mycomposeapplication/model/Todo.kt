@@ -1,4 +1,4 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -13,3 +13,5 @@ data class Todo(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
+
+data class Response(val todos:List<Todo>)

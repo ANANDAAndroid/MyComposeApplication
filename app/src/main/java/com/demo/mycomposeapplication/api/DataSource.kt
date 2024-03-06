@@ -1,11 +1,11 @@
-package com.demo.mycomposeapplication
+package com.demo.mycomposeapplication.api
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 abstract class DataSource {
-    suspend fun<Api> getData(data:suspend () -> Api):Status<Api>{
+    suspend fun<Api> getData(data:suspend () -> Api): Status<Api> {
         return withContext(Dispatchers.IO){
            try {
                Status.Success(data.invoke())
@@ -16,7 +16,7 @@ abstract class DataSource {
                        Status.Failure(false, throwable.code())
                    }
                    else->{
-                       Status.Failure(true,null)
+                       Status.Failure(true, null)
                    }
                }
 
