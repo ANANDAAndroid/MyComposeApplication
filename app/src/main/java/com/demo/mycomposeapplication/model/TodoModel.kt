@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "TODO")
-data class Todo(
+data class TodoModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("id") val id: Int = 0,
     @ColumnInfo("title") val title: String,
@@ -15,4 +15,4 @@ data class Todo(
 
 )
 
-data class Response(val todos:List<Todo>)
+data class Response(val todoModels:List<TodoModel>)

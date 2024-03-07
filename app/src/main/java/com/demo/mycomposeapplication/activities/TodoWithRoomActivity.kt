@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import com.demo.mycomposeapplication.Viewmodel
 import com.demo.mycomposeapplication.api.Status
 import com.demo.mycomposeapplication.model.Response
-import com.demo.mycomposeapplication.model.Todo
+import com.demo.mycomposeapplication.model.TodoModel
 import com.demo.mycomposeapplication.screens.Todo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,8 +23,8 @@ class TodoWithRoomActivity : ComponentActivity() {
 
 
             val todoList=Response(listOf())
-            Todo(todoList.todos){title, desc ->
-                viewmodel.insertData(Todo(title, desc))
+            Todo(todoList.todoModels){ title, desc ->
+                viewmodel.insertData(TodoModel(0,title, desc))
             }
 
             when(val result=viewmodel.responseInsertData.collectAsState().value){
@@ -32,7 +32,7 @@ class TodoWithRoomActivity : ComponentActivity() {
 
                 }
                 is Status.Success ->{
-                    if (result.data){
+                    if (result.data>0){
                         Toast.makeText(this, "inserted successfully", Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -1,6 +1,5 @@
 package com.demo.mycomposeapplication.screens
 
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,19 +32,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import com.demo.mycomposeapplication.model.Todo
+import com.demo.mycomposeapplication.model.TodoModel
 import com.demo.mycomposeapplication.ui.theme.MyComposeApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun Todo(todoList: List<Todo>,value: (title: String, desc: String) -> Unit) {
+internal fun Todo(todoModelList: List<TodoModel>, value: (title: String, desc: String) -> Unit) {
     MyComposeApplicationTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -83,7 +79,7 @@ internal fun Todo(todoList: List<Todo>,value: (title: String, desc: String) -> U
                         .padding(it)
                         .fillMaxSize()
                 ) {
-                    RecycleView(list = todoList)
+                    RecycleView(list = todoModelList)
                 }
             }
         }
@@ -92,7 +88,7 @@ internal fun Todo(todoList: List<Todo>,value: (title: String, desc: String) -> U
 
 
 @Composable
-private fun RecycleView(list: List<Todo>) {
+private fun RecycleView(list: List<TodoModel>) {
     LazyColumn {
         items(list) {
             ItemTodo(it.title, it.desc)

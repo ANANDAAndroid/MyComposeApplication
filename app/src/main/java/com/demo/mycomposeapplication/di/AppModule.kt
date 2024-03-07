@@ -57,7 +57,7 @@ object AppModule {
         retrofit.create(ApiService::class.java)
     @Provides
     @Singleton
-    fun roomDatabase(@ApplicationContext context: Context): RoomDatabase {
+    fun appDatabase(@ApplicationContext context: Context): AppDataBase {
         return Room.databaseBuilder(context, AppDataBase::class.java, "App_DATABASE")
             .fallbackToDestructiveMigration().build()
     }
