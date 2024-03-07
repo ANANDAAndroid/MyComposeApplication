@@ -45,7 +45,7 @@ import com.demo.mycomposeapplication.ui.theme.MyComposeApplicationTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun Todo(todoList: List<Todo>) {
+internal fun Todo(todoList: List<Todo>,value: (title: String, desc: String) -> Unit) {
     MyComposeApplicationTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -60,15 +60,17 @@ internal fun Todo(todoList: List<Todo>) {
 
                 },
                 floatingActionButton = {
-                    val showDialog= remember { mutableStateOf(false) }
+                    val showDialog = remember { mutableStateOf(false) }
                     FloatingActionButton(
                         onClick = {
-                             showDialog.value=true
+                            showDialog.value = true
                         },
                         containerColor = Color.Yellow,
                         shape = CircleShape
                     ) {
-                        TodoDialog(showDialog = showDialog)
+                        TodoDialog(showDialog = showDialog) { title, desc ->
+                            value(title, desc)
+                        }
                         Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
                     }
 
@@ -121,15 +123,17 @@ internal fun ItemTodo(title: String, desc: String) {
 }
 
 
-
 @Composable
-private fun TodoDialog(showDialog:MutableState<Boolean>) {
-    val title= remember { mutableStateOf("") }
-    val desc= remember { mutableStateOf("") }
-    val localFocusManager= LocalFocusManager.current
-    if (showDialog.value){
+private fun TodoDialog(showDialog: MutableState<Boolean>,value:(title:String,desc:String) -> Unit) {
+    val title = remember { mutableStateOf("") }
+    val desc = remember { mutableStateOf("") }
+    val localFocusManager = LocalFocusManager.current
+    if (showDialog.value) {
         AlertDialog(onDismissRequest = { }, confirmButton = {
-            OutlinedButton(onClick = { }, shape = RoundedCornerShape(5.dp)) {
+            OutlinedButton(onClick = {
+                value(title.value,desc.value)
+                showDialog.value = false
+            }, shape = RoundedCornerShape(5.dp)) {
                 Text(text = "Save")
             }
         },
@@ -141,7 +145,7 @@ private fun TodoDialog(showDialog:MutableState<Boolean>) {
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     OutlinedTextField(value = title.value,
-                        onValueChange = { title.value=it },
+                        onValueChange = { title.value = it },
                         placeholder = {
                             Text(text = "Add title")
                         },
@@ -150,7 +154,7 @@ private fun TodoDialog(showDialog:MutableState<Boolean>) {
                         }
                     )
                     OutlinedTextField(value = desc.value,
-                        onValueChange = { desc.value=it },
+                        onValueChange = { desc.value = it },
                         placeholder = {
                             Text(text = "Add description")
                         },
