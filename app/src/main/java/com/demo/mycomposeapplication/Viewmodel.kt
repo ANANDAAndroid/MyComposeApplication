@@ -22,9 +22,19 @@ class Viewmodel @Inject constructor(private val repository: Repository): ViewMod
         _response.emit(repository.getData())
     }
 
-    private val _responseInsertData:MutableStateFlow<Status<Long>> = MutableStateFlow(Status.Loading)
+    private val _responseInsertData:MutableStateFlow<Status<Long>> = MutableStateFlow(Status.Success(0))
     val responseInsertData:StateFlow<Status<Long>> get() = _responseInsertData
+
     fun insertData(todoModel:TodoModel) =viewModelScope.launch{
+        _responseInsertData.emit(Status.Loading)
         _responseInsertData.emit(repository.insertToDo(todoModel))
+    }
+
+    private val _responseGetData:MutableStateFlow<Status<List<TodoModel>>> = MutableStateFlow(Status.Success(emptyList()))
+    val responseGetData:StateFlow<Status<List<TodoModel>>> get() = _responseGetData
+
+    fun getTodoData() =viewModelScope.launch{
+        _responseGetData.emit(Status.Loading)
+        _responseGetData.emit(repository.getToDo())
     }
 }

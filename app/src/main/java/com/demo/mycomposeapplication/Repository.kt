@@ -7,12 +7,14 @@ import com.demo.mycomposeapplication.model.TodoModel
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val apiService: ApiService ,private val appDataBase: AppDataBase): DataSource() {
-
     suspend fun getData()= getData {
         apiService.getData()
     }
 
     suspend fun insertToDo(todoModel: TodoModel)=getData {
         appDataBase.getDao().insertTodo(todoModel)
+    }
+    suspend fun getToDo()=getData {
+        appDataBase.getDao().getTodo()
     }
 }

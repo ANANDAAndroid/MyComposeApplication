@@ -129,6 +129,8 @@ private fun TodoDialog(showDialog: MutableState<Boolean>,value:(title:String,des
             OutlinedButton(onClick = {
                 value(title.value,desc.value)
                 showDialog.value = false
+                title.value=""
+                desc.value=""
             }, shape = RoundedCornerShape(5.dp)) {
                 Text(text = "Save")
             }
