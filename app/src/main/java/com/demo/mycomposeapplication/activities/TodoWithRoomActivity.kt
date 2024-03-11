@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.demo.mycomposeapplication.Viewmodel
 import com.demo.mycomposeapplication.api.Status
 import com.demo.mycomposeapplication.database.AppDataBase
@@ -30,17 +31,16 @@ class TodoWithRoomActivity : ComponentActivity() {
         viewmodel.getTodoData()
         setContent {
             val todoList = remember { mutableStateOf(emptyList<TodoModel>()) }
-            Todo(todoModelList = todoList.value) { title, desc ->
+            Todo(todoModelList = todoList.value.asReversed()) { title, desc ->
                 viewmodel.insertData(TodoModel(id = 0, title = title, desc = desc))
             }
             when (val result = viewmodel.responseInsertData.collectAsState().value) {
                 is Status.Loading -> {
-                    //  Toast.makeText(this, "processing insertion", Toast.LENGTH_SHORT).show()
+
                 }
 
                 is Status.Success -> {
                     if (result.data > 0) {
-                           // Toast.makeText(rememberedContext(), "inserted successfully", Toast.LENGTH_SHORT).show()
                             viewmodel.getTodoData()
                     }
                 }
@@ -49,16 +49,14 @@ class TodoWithRoomActivity : ComponentActivity() {
                     Toast.makeText(this, "insertion failed", Toast.LENGTH_SHORT).show()
                 }
             }
+
             when (val result = viewmodel.responseGetData.collectAsState().value) {
                 is Status.Loading -> {
-                    // Toast.makeText(this, "processing fetching", Toast.LENGTH_SHORT).show()
                 }
 
                 is Status.Success -> {
                     if (result.data.isNotEmpty()) {
-                        println("fjahfjajroa"+result.data)
-                      todoList.value=  (result.data).sortedByDescending { it.id }
-                        // Toast.makeText(this, "fetched successfully", Toast.LENGTH_SHORT).show()
+                      todoList.value=  result.data
                     }
                 }
 

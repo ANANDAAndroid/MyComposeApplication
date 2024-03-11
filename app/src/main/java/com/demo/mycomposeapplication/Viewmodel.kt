@@ -6,6 +6,7 @@ import com.demo.mycomposeapplication.api.Status
 import com.demo.mycomposeapplication.model.QuotesDataModel
 import com.demo.mycomposeapplication.model.TodoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,15 +27,17 @@ class Viewmodel @Inject constructor(private val repository: Repository): ViewMod
     val responseInsertData:StateFlow<Status<Long>> get() = _responseInsertData
 
     fun insertData(todoModel:TodoModel) =viewModelScope.launch{
-        _responseInsertData.emit(Status.Loading)
-        _responseInsertData.emit(repository.insertToDo(todoModel))
+        _responseInsertData.value=Status.Loading
+        _responseInsertData.value=repository.insertToDo(todoModel)
     }
 
     private val _responseGetData:MutableStateFlow<Status<List<TodoModel>>> = MutableStateFlow(Status.Success(emptyList()))
     val responseGetData:StateFlow<Status<List<TodoModel>>> get() = _responseGetData
 
     fun getTodoData() =viewModelScope.launch{
-        _responseGetData.emit(Status.Loading)
-        _responseGetData.emit(repository.getToDo())
+        _responseGetData.value=Status.Loading
+        delay(500)
+        _responseGetData.value=repository.getToDo()
+
     }
 }
